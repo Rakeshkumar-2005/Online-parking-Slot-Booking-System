@@ -1,0 +1,153 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Poppins,sans-serif;
+}
+
+body{
+    background:rgb(201, 18, 140);
+    color:white;
+    min-height:100vh;
+}
+
+/* Navbar */
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:20px 80px;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+}
+
+ul{
+    display:flex;
+    gap:40px;
+    list-style:none;
+}
+
+li{
+    cursor:pointer;
+    color:#94a3b8;
+}
+
+.buttons{
+    display:flex;
+    gap:15px;
+}
+
+.login{
+    background:transparent;
+    color:white;
+    border:1px solid #334155;
+}
+
+.start{
+    background:#2563eb;
+    color:white;
+}
+
+button{
+    border:none;
+    padding:12px 20px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+/* Hero */
+
+.hero{
+    text-align:center;
+    margin-top:100px;
+}
+
+.badge{
+    display:inline-block;
+
+    padding:10px 20px;
+
+    border:1px solid #2563eb;
+
+    border-radius:30px;
+
+    color:#60a5fa;
+}
+
+.hero h1{
+    font-size:90px;
+    margin-top:30px;
+}
+
+.hero span{
+    color:#3b82f6;
+}
+
+.hero p{
+    margin-top:25px;
+    color:#94a3b8;
+    font-size:22px;
+}
+
+.hero-buttons{
+    margin-top:40px;
+
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+.primary{
+    background:#2563eb;
+    color:white;
+}
+
+.secondary{
+    background:transparent;
+    border:1px solid #334155;
+    color:white;
+}
+
+/* Cards */
+
+.stats{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:25px;
+
+    margin-top:80px;
+
+    flex-wrap:wrap;
+}
+
+.card{
+
+    width:200px;
+
+    background:#0f172a;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    border:1px solid #1e293b;
+}
+
+.card h2{
+    color:white;
+}
+
+.card p{
+    margin-top:10px;
+    color:#94a3b8;
+}
