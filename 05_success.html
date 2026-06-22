@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Success</title>
+
+<style>
+
+body{
+background:#020617;
+color:white;
+font-family:Arial;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+text-align:center;
+}
+
+.box{
+
+background:#0f172a;
+
+padding:40px;
+
+border-radius:15px;
+}
+
+h1{
+color:#22c55e;
+}
+
+button{
+
+margin-top:20px;
+
+padding:12px 25px;
+
+background:#2563eb;
+
+border:none;
+
+border-radius:8px;
+
+color:white;
+
+cursor:pointer;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="box">
+
+<h1>
+✅ Booking Successful
+</h1>
+
+<h2 id="slot"></h2>
+
+<p>
+Thank you for using Smart Parking.
+</p>
+
+<button onclick="goHome()">
+Back To Home
+</button>
+
+</div>
+
+<script>
+
+let slot =
+localStorage.getItem("slot");
+
+document.getElementById(
+"slot"
+).innerText =
+"Slot Number: " + slot;
+
+function goHome(){
+
+window.location.href =
+"01_index.html";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Select Slot</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#020617;
+color:white;
+text-align:center;
+padding:40px;
+}
+
+h1{
+margin-bottom:40px;
+}
+
+.parking-grid{
+
+display:grid;
+
+grid-template-columns:repeat(4,100px);
+
+gap:20px;
+
+justify-content:center;
+
+margin-top:30px;
+}
+
+.slot{
+
+width:100px;
+height:100px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+font-size:20px;
+}
+
+.available{
+background:green;
+}
+
+.booked{
+background:red;
+cursor:not-allowed;
+}
+
+.selected{
+background:orange !important;
+}
+
+button{
+
+margin-top:40px;
+
+padding:15px 30px;
+
+border:none;
+
+border-radius:10px;
+
+background:#2563eb;
+
+color:white;
+
+cursor:pointer;
+
+font-size:16px;
+}
+
+</style>
+</head>
+<body>
+
+<h1>Select Parking Slot</h1>
+
+<div class="parking-grid">
+
+<div class="slot available">A1</div>
+<div class="slot available">A2</div>
+<div class="slot booked">A3</div>
+<div class="slot available">A4</div>
+
+<div class="slot available">B1</div>
+<div class="slot booked">B2</div>
+<div class="slot available">B3</div>
+<div class="slot available">B4</div>
+
+</div>
+
+<button onclick="goToPayment()">
+Proceed To Payment
+</button>
+
+<script>
+
+let selectedSlot = "";
+
+const slots =
+document.querySelectorAll(".available");
+
+slots.forEach(slot=>{
+
+slot.addEventListener("click",()=>{
+
+slots.forEach(s=>
+s.classList.remove("selected")
+);
+
+slot.classList.add("selected");
+
+selectedSlot =
+slot.innerText;
+
+});
+
+});
+
+function goToPayment(){
+
+if(selectedSlot===""){
+
+alert(
+"Please select a slot first"
+);
+
+return;
+}
+
+localStorage.setItem(
+"slot",
+selectedSlot
+);
+
+window.location.href =
+"04_payment.html";
+
+}
+
+</script>
+
+</body>
+</html>

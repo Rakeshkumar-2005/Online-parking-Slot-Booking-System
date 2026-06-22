@@ -6,10 +6,77 @@
 <title>Parking Slot Booking</title>
 
 <link rel="stylesheet" href="style.css">
+<script>
+    function searchParking(){
+
+    let location =
+    document.getElementById("locationInput").value;
+
+    let results =
+    document.getElementById("parkingResults");
+
+    results.innerHTML = "";
+
+    let parkingData = [
+
+        {
+            name:"City Mall Parking",
+            slots:20,
+            price:"₹30/hr"
+        },
+
+        {
+            name:"Railway Parking",
+            slots:12,
+            price:"₹20/hr"
+        },
+
+        {
+            name:"Airport Parking",
+            slots:35,
+            price:"₹50/hr"
+        }
+
+    ];
+
+    parkingData.forEach(parking=>{
+
+        results.innerHTML += `
+
+        <div class="parking-card">
+
+            <h3>${parking.name}</h3>
+
+            <p>
+            Available Slots:
+            ${parking.slots}
+            </p>
+
+            <p>
+            Price:
+            ${parking.price}
+            </p>
+
+            <button
+            class="book-slot"
+            onclick="openSlots('${parking.name}')">
+
+                View Slots
+
+            </button>
+
+        </div>
+
+        `;
+    });
+
+}
+</script>
 
 </head>
 
 <body>
+    
 
 <nav>
     <div class="logo">
@@ -57,6 +124,28 @@
         <button class="secondary">
             Watch Demo
         </button>
+
+    </div>
+
+</section>
+<section class="find-parking">
+
+    <h2>Find Parking Near You</h2>
+
+    <div class="search-box">
+
+        <input
+        type="text"
+        id="locationInput"
+        placeholder="Enter Location">
+
+        <button onclick="searchParking()">
+            Search
+        </button>
+
+    </div>
+
+    <div id="parkingResults">
 
     </div>
 

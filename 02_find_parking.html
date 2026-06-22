@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Parking</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#020617;
+color:white;
+}
+
+header{
+padding:20px 50px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#0f172a;
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+color:#3b82f6;
+}
+
+.search-section{
+padding:50px;
+text-align:center;
+}
+
+.search-section h1{
+margin-bottom:20px;
+}
+
+.search-box{
+display:flex;
+justify-content:center;
+gap:10px;
+}
+
+.search-box input{
+width:400px;
+padding:15px;
+border:none;
+border-radius:10px;
+}
+
+.search-box button{
+padding:15px 25px;
+border:none;
+background:#2563eb;
+color:white;
+border-radius:10px;
+cursor:pointer;
+}
+
+.parking-container{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+margin-top:50px;
+}
+
+.parking-card{
+width:300px;
+background:#0f172a;
+padding:20px;
+border-radius:15px;
+border:1px solid #1e293b;
+}
+
+.parking-card h2{
+color:#3b82f6;
+margin-bottom:10px;
+}
+
+.parking-card p{
+margin:8px 0;
+color:#cbd5e1;
+}
+
+.parking-card button{
+margin-top:15px;
+width:100%;
+padding:12px;
+background:#2563eb;
+border:none;
+color:white;
+border-radius:10px;
+cursor:pointer;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<div class="logo">
+🚗 Smart Parking
+</div>
+
+</header>
+
+<section class="search-section">
+
+<h1>Find Parking Near You</h1>
+
+<div class="search-box">
+
+<input
+type="text"
+placeholder="Enter Location">
+
+<button onclick="showParking()">
+Search
+</button>
+
+</div>
+
+<div
+class="parking-container"
+id="parkingContainer">
+
+</div>
+
+</section>
+
+<script>
+
+function showParking(){
+
+let container =
+document.getElementById(
+"parkingContainer"
+);
+
+container.innerHTML=`
+
+<div class="parking-card">
+
+<h2>City Mall Parking</h2>
+
+<p>📍 Indore</p>
+
+<p>🟢 Available Slots: 20</p>
+
+<p>💰 ₹30/hr</p>
+
+<button onclick="viewSlots()">
+View Slots
+</button>
+
+</div>
+
+<div class="parking-card">
+
+<h2>Railway Station Parking</h2>
+
+<p>📍 Indore</p>
+
+<p>🟢 Available Slots: 12</p>
+
+<p>💰 ₹20/hr</p>
+
+<button onclick="viewSlots()">
+View Slots
+</button>
+
+</div>
+
+<div class="parking-card">
+
+<h2>Airport Parking</h2>
+
+<p>📍 Indore</p>
+
+<p>🟢 Available Slots: 35</p>
+
+<p>💰 ₹50/hr</p>
+
+<button onclick="viewSlots()">
+View Slots
+</button>
+
+</div>
+
+`;
+
+}
+
+function viewSlots(){
+
+window.location.href=
+"03_slots.html";
+
+}
+
+</script>
+
+</body>
+</html>
