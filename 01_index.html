@@ -222,6 +222,59 @@ font-size:50px;
 
 }
 
+
+
+
+
+/* Navbar */
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:20px 80px;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+}
+
+ul{
+    display:flex;
+    gap:40px;
+    list-style:none;
+}
+
+li{
+    cursor:pointer;
+    color:#94a3b8;
+}
+
+.buttons{
+    display:flex;
+    gap:15px;
+}
+
+.login{
+    background:transparent;
+    color:white;
+    border:1px solid #334155;
+}
+
+.start{
+    background:#2563eb;
+    color:white;
+}
+
+button{
+    border:none;
+    padding:12px 20px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
 </style>
 </head>
 <body>
@@ -229,34 +282,22 @@ font-size:50px;
 <!-- Navbar -->
 
 <nav>
+    <div class="logo">
+        Standway
+    </div>
 
-<div class="logo">
-<i class="fa-solid fa-square-parking"></i>
- SmartParking
-</div>
+    <ul>
+        <li>Find Parking</li>
+        <li>Live Map</li>
+        <li>Pricing</li>
+        <li>Reviews</li>
+        <li>About</li>
+    </ul>
 
-<ul>
-<li>
-  <a href="02_find_parking.html">Find Parking</a>
-</li>
-<li>
-    <a href="08_dashboard.html">Dashboard</a>
-</li>
-<li>Live Map</li>
-<li>Pricing</li>
-<li>Reviews</li>
-<li>About</li>
-</ul>
-
-<div class="nav-btns">
-<a href="06_login.html">
-    <button class="login">Login</button>
-</a>
-<a href="07_register.html">
-    <button class="start">Get Started</button>
-</a>
-</div>
-
+    <div class="buttons">
+        <button class="login">Log In</button>
+        <button class="start">Get Started →</button>
+    </div>
 </nav>
 
 <!-- Hero -->
