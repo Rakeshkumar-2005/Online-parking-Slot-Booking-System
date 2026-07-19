@@ -32,7 +32,7 @@ An **Online Parking Slot Booking System** is a web-based application that allows
 - Express.js
 
 ### Database *(Future Enhancement)*
-- MySQL
+- mongoDB
 
 ### Tools
 - Visual Studio Code
