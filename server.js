@@ -17,8 +17,10 @@ mongoose.connect(process.env.MONGO_URI)
 });
 
 const parkingRoutes = require("./routes/parkingRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 app.use("/api/parking", parkingRoutes);
+app.use("/api/users", userRoutes);
 
 app.get("/",(req,res)=>{
     res.send("Parking API Running");
