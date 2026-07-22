@@ -16,6 +16,10 @@ mongoose.connect(process.env.MONGO_URI)
     console.log(err);
 });
 
+const parkingRoutes = require("./routes/parkingRoutes");
+
+app.use("/api/parking", parkingRoutes);
+
 app.get("/",(req,res)=>{
     res.send("Parking API Running");
 });
