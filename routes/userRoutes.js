@@ -1,3 +1,4 @@
+const bcrypt = require("bcryptjs");
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
@@ -16,10 +17,18 @@ router.post("/register", async (req, res) => {
             });
         }
 
+        // const user = new User({
+        //     name,
+        //     email,   // plain text password
+        //     password
+        // });
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         const user = new User({
             name,
             email,
-            password
+            password: hashedPassword
         });
 
         await user.save();
@@ -51,12 +60,23 @@ router.post("/login", async (req, res) => {
             });
         }
 
-        if (user.password !== password) {
+        // if (user.password !== password) {
+        //     return res.status(400).json({
+        //         message: "Invalid password"  // plain text waale 
+        //     });
+        // }
+
+        
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if(!isMatch){
             return res.status(400).json({
-                message: "Invalid password"
+            message:"Invalid password"
             });
         }
 
+
+        
         res.status(200).json({
             message: "Login Successful",
             user
