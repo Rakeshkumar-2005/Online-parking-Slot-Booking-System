@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const Booking = require("../models/Booking");
 
 const Parking = require("../models/Parking");
 
@@ -82,7 +83,7 @@ router.get("/availability/:id", async (req, res) => {
 
     }
 
-    
+});  
     // Update Parking
 router.put("/update/:id", async (req, res) => {
 
@@ -117,6 +118,44 @@ router.put("/update/:id", async (req, res) => {
     }
 
 });
+
+// Delete Parking
+router.delete("/delete/:id", async (req, res) => {
+
+    try {
+
+        const parking = await Parking.findById(req.params.id);
+
+        if (!parking) {
+            return res.status(404).json({
+                message: "Parking not found"
+            });
+        }
+
+        // Check if parking has any bookings
+        const bookingExists = await Booking.findOne({
+            parkingId: req.params.id
+        });
+
+        if (bookingExists) {
+            return res.status(400).json({
+                message: "Cannot delete parking. Active bookings exist."
+            });
+        }
+
+        await Parking.findByIdAndDelete(req.params.id);
+
+        res.status(200).json({
+            message: "Parking Deleted Successfully"
+        });
+
+    } catch (err) {
+
+        res.status(500).json({
+            message: err.message
+        });
+
+    }
 
 });
 
