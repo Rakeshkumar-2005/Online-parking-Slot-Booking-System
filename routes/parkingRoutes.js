@@ -25,4 +25,99 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Search Parking by Location
+router.get("/search/:location", async (req, res) => {
+
+    try {
+
+        const parking = await Parking.find({
+            location: {
+                $regex: req.params.location,
+                $options: "i"
+            }
+        });
+
+        res.json(parking);
+
+    } catch (err) {
+
+        res.status(500).json({
+            message: err.message
+        });
+
+    }
+
+});
+
+// Get Parking Availability
+router.get("/availability/:id", async (req, res) => {
+
+    try {
+
+        const parking = await Parking.findById(req.params.id);
+
+        if (!parking) {
+            return res.status(404).json({
+                message: "Parking not found"
+            });
+        }
+
+        const occupiedSlots = parking.totalSlots - parking.availableSlots;
+
+        res.json({
+
+            parkingName: parking.name,
+            location: parking.location,
+            totalSlots: parking.totalSlots,
+            availableSlots: parking.availableSlots,
+            occupiedSlots: occupiedSlots
+
+        });
+
+    } catch (err) {
+
+        res.status(500).json({
+            message: err.message
+        });
+
+    }
+
+    
+    // Update Parking
+router.put("/update/:id", async (req, res) => {
+
+    try {
+
+        const parking = await Parking.findById(req.params.id);
+
+        if (!parking) {
+            return res.status(404).json({
+                message: "Parking not found"
+            });
+        }
+
+        parking.name = req.body.name || parking.name;
+        parking.location = req.body.location || parking.location;
+        parking.totalSlots = req.body.totalSlots || parking.totalSlots;
+        parking.availableSlots = req.body.availableSlots || parking.availableSlots;
+
+        await parking.save();
+
+        res.status(200).json({
+            message: "Parking Updated Successfully",
+            parking
+        });
+
+    } catch (err) {
+
+        res.status(500).json({
+            message: err.message
+        });
+
+    }
+
+});
+
+});
+
 module.exports = router;

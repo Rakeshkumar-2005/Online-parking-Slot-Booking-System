@@ -2,13 +2,16 @@ const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
 
-    const token = req.header("Authorization");
+    const authHeader = req.header("Authorization");
 
-    if (!token) {
+    if (!authHeader) {
         return res.status(401).json({
             message: "Access Denied"
         });
     }
+
+    // Authorization: Bearer <token>
+    const token = authHeader.split(" ")[1];
 
     try {
 
@@ -23,7 +26,7 @@ module.exports = (req, res, next) => {
 
     } catch (err) {
 
-        res.status(400).json({
+        return res.status(400).json({
             message: "Invalid Token"
         });
 
