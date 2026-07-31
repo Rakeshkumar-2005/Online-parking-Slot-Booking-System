@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Register</title>
+
+<style>
+
+body{
+background:#020617;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+font-family:Arial;
+}
+
+.box{
+background:#0f172a;
+padding:30px;
+border-radius:15px;
+width:350px;
+}
+
+h2{
+color:white;
+text-align:center;
+}
+
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:8px;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="box">
+
+<h2>Create Account</h2>
+
+<input type="text" id="name" placeholder="Name">
+
+<input type="email" id="email" placeholder="Email">
+
+<input type="password" id="password" placeholder="Password">
+
+<button onclick="register()">
+Register
+</button>
+
+</div>
+
+<script>
+
+async function register(){
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    if(!name || !email || !password){
+        alert("Please fill all fields");
+        return;
+    }
+
+    try{
+
+        const response = await fetch("http://localhost:5000/api/users/register",{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+                name,
+                email,
+                password
+            })
+
+        });
+
+        const data = await response.json();
+
+        alert(data.message);
+
+        if(response.ok){
+
+            window.location.href="login.html";
+
+        }
+
+    }catch(err){
+
+        console.log(err);
+        alert("Server Error");
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,18 +1,31 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const router = express.Router();
 const Booking = require("../models/Booking");
 
 const Parking = require("../models/Parking");
 
+
 // Add Parking
 router.post("/add", async (req, res) => {
+  const { name, location, totalSlots, availableSlots } = req.body;
+
+  if (!name || !location || totalSlots == null || availableSlots == null) {
+    return res.status(400).json({
+        message: "All fields are required"
+    });
+  }
   try {
     const parking = new Parking(req.body);
     await parking.save();
 
     res.status(201).json(parking);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error(err);
+
+    res.status(500).json({
+    message: "Internal Server Error"
+});
   }
 });
 
@@ -52,6 +65,11 @@ router.get("/search/:location", async (req, res) => {
 
 // Get Parking Availability
 router.get("/availability/:id", async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({
+            message: "Invalid ID"
+        });
+    }
 
     try {
 
@@ -86,7 +104,11 @@ router.get("/availability/:id", async (req, res) => {
 });  
     // Update Parking
 router.put("/update/:id", async (req, res) => {
-
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({
+            message: "Invalid ID"
+        });
+    }
     try {
 
         const parking = await Parking.findById(req.params.id);
@@ -121,7 +143,11 @@ router.put("/update/:id", async (req, res) => {
 
 // Delete Parking
 router.delete("/delete/:id", async (req, res) => {
-
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({
+            message: "Invalid ID"
+        });
+    }
     try {
 
         const parking = await Parking.findById(req.params.id);

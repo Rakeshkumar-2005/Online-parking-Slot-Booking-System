@@ -9,6 +9,13 @@ const auth = require("../middleware/authMiddleware");
 // booking API
 
 router.post("/book", auth, async (req, res) => {
+    const { parkingId, vehicleNumber } = req.body;
+
+if (!parkingId || !vehicleNumber) {
+    return res.status(400).json({
+        message: "Parking ID and Vehicle Number are required"
+    });
+}
 
     try {
 

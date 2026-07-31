@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Parking</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:#020617;
+color:white;
+padding:40px;
+}
+
+h1{
+text-align:center;
+margin-bottom:30px;
+}
+
+.search{
+display:flex;
+justify-content:center;
+margin-bottom:30px;
+gap:10px;
+}
+
+.search input{
+padding:12px;
+width:300px;
+border:none;
+border-radius:8px;
+}
+
+.search button{
+padding:12px 20px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+.container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:20px;
+}
+
+.card{
+background:#0f172a;
+padding:20px;
+border-radius:12px;
+}
+
+.card h2{
+margin-bottom:10px;
+}
+
+.card p{
+margin:8px 0;
+}
+
+.card button{
+margin-top:15px;
+padding:10px;
+width:100%;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+<body>
+
+<h1>Find Parking</h1>
+
+<div class="search">
+
+<input
+type="text"
+id="location"
+placeholder="Search by Location">
+
+<button onclick="searchParking()">
+Search
+</button>
+
+</div>
+
+<div
+class="container"
+id="parkingList">
+
+</div>
+
+<script>
+
+const API="http://localhost:5000/api/parking";
+
+window.onload=loadParking;
+
+// Load All Parking
+
+async function loadParking(){
+
+    const response=await fetch(API);
+
+    const data=await response.json();
+
+    displayParking(data);
+
+}
+
+// Display Cards
+
+function displayParking(data){
+
+    const list=document.getElementById("parkingList");
+
+    list.innerHTML="";
+
+    if(data.length===0){
+
+        list.innerHTML="<h2>No Parking Found</h2>";
+
+        return;
+
+    }
+
+    data.forEach(parking=>{
+
+        list.innerHTML+=`
+
+        <div class="card">
+
+        <h2>${parking.name}</h2>
+
+        <p><b>Location:</b> ${parking.location}</p>
+
+        <p><b>Total Slots:</b> ${parking.totalSlots}</p>
+
+        <p><b>Available:</b> ${parking.availableSlots}</p>
+
+        <button onclick="bookParking('${parking._id}')">
+        Book Now
+        </button>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+// Search Parking
+
+async function searchParking(){
+
+const location=document.getElementById("location").value;
+
+if(location===""){
+
+loadParking();
+
+return;
+
+}
+
+const response=await fetch(API+"/search/"+location);
+
+const data=await response.json();
+
+displayParking(data);
+
+}
+
+// Book Parking
+
+async function bookParking(id){
+
+const token=localStorage.getItem("token");
+
+if(!token){
+
+alert("Please Login First");
+
+window.location.href="login.html";
+
+return;
+
+}
+
+const vehicleNumber=prompt("Enter Vehicle Number");
+
+if(!vehicleNumber) return;
+
+const response=await fetch("http://localhost:5000/api/bookings/book",{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json",
+
+Authorization:"Bearer "+token
+
+},
+
+body:JSON.stringify({
+
+parkingId:id,
+
+vehicleNumber
+
+})
+
+});
+
+const data=await response.json();
+
+alert(data.message);
+
+loadParking();
+
+}
+
+</script>
+
+</body>
+</html>
