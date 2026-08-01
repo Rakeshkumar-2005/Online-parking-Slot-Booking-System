@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:#020617;
+color:white;
+padding:30px;
+}
+
+h1{
+text-align:center;
+margin-bottom:25px;
+}
+
+.form{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:10px;
+margin-bottom:30px;
+}
+
+input{
+padding:12px;
+border:none;
+border-radius:8px;
+}
+
+button{
+padding:12px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+background:#2563eb;
+color:white;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,td{
+border:1px solid #334155;
+padding:12px;
+text-align:center;
+}
+
+th{
+background:#1e293b;
+}
+
+.edit{
+background:orange;
+}
+
+.delete{
+background:red;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Admin Dashboard</h1>
+
+<div class="form">
+
+<input id="name" placeholder="Parking Name">
+
+<input id="location" placeholder="Location">
+
+<input id="slots" type="number" placeholder="Total Slots">
+
+<input id="price" type="number" placeholder="Price">
+
+<button onclick="addParking()">Add Parking</button>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Location</th>
+
+<th>Slots</th>
+
+<th>Available</th>
+
+<th>Price</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="parkingTable">
+
+</tbody>
+
+</table>
+
+<script>
+
+const API="http://localhost:5000/api/parking";
+
+window.onload=loadParking;
+
+async function loadParking(){
+
+const response=await fetch(API);
+
+const data=await response.json();
+
+const table=document.getElementById("parkingTable");
+
+table.innerHTML="";
+
+data.forEach(parking=>{
+
+table.innerHTML+=`
+
+<tr>
+
+<td>${parking.name}</td>
+
+<td>${parking.location}</td>
+
+<td>${parking.totalSlots}</td>
+
+<td>${parking.availableSlots}</td>
+
+<td>₹${parking.pricePerHour}</td>
+
+<td>
+
+<button class="edit"
+onclick="editParking('${parking._id}')">
+
+Edit
+
+</button>
+
+<button class="delete"
+onclick="deleteParking('${parking._id}')">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+async function addParking(){
+
+const name=document.getElementById("name").value;
+
+const location=document.getElementById("location").value;
+
+const slots=document.getElementById("slots").value;
+
+const price=document.getElementById("price").value;
+
+const response=await fetch(API+"/add",{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+name:name,
+
+location:location,
+
+totalSlots:Number(slots),
+
+availableSlots:Number(slots),
+
+pricePerHour:Number(price)
+
+})
+
+});
+
+const data=await response.json();
+
+alert("Parking Added");
+
+loadParking();
+
+}
+
+async function deleteParking(id){
+
+if(!confirm("Delete Parking?")) return;
+
+const response=await fetch(API+"/delete/"+id,{
+
+method:"DELETE"
+
+});
+
+const data=await response.json();
+
+alert(data.message);
+
+loadParking();
+
+}
+
+async function editParking(id){
+
+const name=prompt("New Parking Name");
+
+const location=prompt("New Location");
+
+const slots=prompt("Total Slots");
+
+const available=prompt("Available Slots");
+
+const price=prompt("Price");
+
+const response=await fetch(API+"/update/"+id,{
+
+method:"PUT",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+name,
+
+location,
+
+totalSlots:Number(slots),
+
+availableSlots:Number(available),
+
+pricePerHour:Number(price)
+
+})
+
+});
+
+const data=await response.json();
+
+alert(data.message);
+
+loadParking();
+
+}
+
+</script>
+
+</body>
+</html>

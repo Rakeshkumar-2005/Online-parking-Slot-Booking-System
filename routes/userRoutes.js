@@ -9,13 +9,28 @@ const auth = require("../middleware/authMiddleware");
 router.post("/register", async (req, res) => {
     const { name, email, password } = req.body;
 
-if (!name || !email || !password) {
-
-    return res.status(400).json({
-        message: "All fields are required"
-    });
+if (name.trim().length < 3) {
+        return res.status(400).json({
+            message: "Name must be at least 3 characters"
+        });
 
 }
+// Email Validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({
+            message: "Invalid Email"
+        });
+    }
+
+     // Password Validation
+    if (password.length < 6) {
+        return res.status(400).json({
+            message: "Password must contain at least 6 characters"
+        });
+    }
+
     try {
 
         const { name, email, password } = req.body;

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#020617;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
+}
+
+.card{
+
+width:500px;
+background:#0f172a;
+padding:35px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,.3);
+
+}
+
+.avatar{
+
+width:90px;
+height:90px;
+margin:auto;
+border-radius:50%;
+background:#2563eb;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:38px;
+font-weight:bold;
+margin-bottom:20px;
+
+}
+
+h2{
+
+margin-bottom:25px;
+
+}
+
+.info{
+
+text-align:left;
+margin:12px 0;
+font-size:18px;
+
+}
+
+.info span{
+
+color:#3b82f6;
+font-weight:bold;
+
+}
+
+.stats{
+
+margin:25px 0;
+padding:15px;
+background:#1e293b;
+border-radius:12px;
+
+}
+
+button{
+
+width:100%;
+padding:14px;
+margin-top:12px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-size:16px;
+
+}
+
+.edit{
+
+background:#2563eb;
+color:white;
+
+}
+
+.logout{
+
+background:#ef4444;
+color:white;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="avatar" id="avatar"></div>
+
+<h2>My Profile</h2>
+
+<div class="info">
+
+Name :
+<span id="name"></span>
+
+</div>
+
+<div class="info">
+
+Email :
+<span id="email"></span>
+
+</div>
+
+<div class="info">
+
+Role :
+<span id="role"></span>
+
+</div>
+
+<div class="stats">
+
+<h3>Total Bookings</h3>
+
+<h1 id="bookingCount">0</h1>
+
+</div>
+
+<button class="edit">
+Edit Profile
+</button>
+
+<button class="logout" onclick="logout()">
+Logout
+</button>
+
+</div>
+
+<script>
+
+const user = JSON.parse(localStorage.getItem("user"));
+
+if(!user){
+
+    window.location.href="login.html";
+
+}
+
+document.getElementById("avatar").innerHTML =
+user.name.charAt(0).toUpperCase();
+
+document.getElementById("name").innerHTML =
+user.name;
+
+document.getElementById("email").innerHTML =
+user.email;
+
+document.getElementById("role").innerHTML =
+user.role;
+
+// Booking Count API
+
+async function loadBookings(){
+
+const token=localStorage.getItem("token");
+
+try{
+
+const response=await fetch(
+"http://localhost:5000/api/bookings/my-bookings",
+{
+
+headers:{
+Authorization:"Bearer "+token
+}
+
+});
+
+const data=await response.json();
+
+document.getElementById("bookingCount").innerHTML=
+data.length;
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+loadBookings();
+
+function logout(){
+
+localStorage.removeItem("token");
+localStorage.removeItem("user");
+
+window.location.href="index.html";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -43,6 +43,13 @@ border:none;
 border-radius:8px;
 cursor:pointer;
 }
+p{
+color:white;
+text-align:center;
+}
+a{
+color:#3b82f6;
+}
 
 </style>
 
@@ -63,6 +70,19 @@ cursor:pointer;
 Register
 </button>
 
+<p>
+Already have an account?
+<a href="login.html">
+login
+</a>
+</p>
+<p>
+Return Home Page
+<a href="index.html">
+Home
+</a>
+</p>
+
 </div>
 
 <script>
@@ -75,6 +95,12 @@ async function register(){
 
     if(!name || !email || !password){
         alert("Please fill all fields");
+        return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address");
         return;
     }
 
@@ -102,9 +128,42 @@ async function register(){
 
         if(response.ok){
 
-            window.location.href="login.html";
+    // Auto Login
+    const loginResponse = await fetch("http://localhost:5000/api/users/login",{
 
-        }
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+            email,
+            password
+        })
+
+    });
+
+    const loginData = await loginResponse.json();
+
+    if(loginResponse.ok){
+
+        localStorage.setItem("token", loginData.token);
+        localStorage.setItem("user", JSON.stringify(loginData.user));
+
+        alert("Registration Successful. Logged in successfully!");
+
+        window.location.href = "index.html";
+
+    }else{
+
+        alert("Registration successful, but auto login failed.");
+
+        window.location.href = "login.html";
+
+    }
+
+}
 
     }catch(err){
 
