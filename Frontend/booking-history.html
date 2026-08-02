@@ -86,7 +86,7 @@ async function loadBookings(){
 try{
 
 const response = await fetch(
-"http://localhost:5000/api/bookings/my-bookings",{
+"https://online-parking-slot-booking-system.onrender.com/api/bookings/my-bookings",{
 
 headers:{
 Authorization:"Bearer "+token
@@ -160,7 +160,7 @@ if(!confirmCancel) return;
 
 const response=await fetch(
 
-"http://localhost:5000/api/bookings/cancel/"+id,
+"https://online-parking-slot-booking-system.onrender.com/api/bookings/cancel/"+id,
 
 {
 

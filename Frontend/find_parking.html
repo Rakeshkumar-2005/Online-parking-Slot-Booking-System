@@ -107,7 +107,7 @@ id="parkingList">
 
 <script>
 
-const API="http://localhost:5000/api/parking";
+const API="http://https://online-parking-slot-booking-system.onrender.com/api/parking";
 
 window.onload=loadParking;
 
@@ -207,7 +207,7 @@ const vehicleNumber=prompt("Enter Vehicle Number");
 
 if(!vehicleNumber) return;
 
-const response=await fetch("http://localhost:5000/api/bookings/book",{
+const response=await fetch("https://online-parking-slot-booking-system.onrender.com/api/bookings/book",{
 
 method:"POST",
 
