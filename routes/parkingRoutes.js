@@ -1,9 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
-const Booking = require("../models/Booking");
+const Booking = require("../models/booking");
 
-const Parking = require("../models/Parking");
+const Parking = require("../models/parking");
 
 
 // Add Parking

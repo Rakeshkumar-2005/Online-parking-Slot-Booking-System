@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const Booking = require("../models/Booking");
-const Parking = require("../models/Parking");
+const Booking = require("../models/booking");
+const Parking = require("../models/parking");
 
 const auth = require("../middleware/authMiddleware");
 
